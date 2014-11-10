@@ -1,6 +1,6 @@
 # Bluebase
 
-TODO: Write a gem description
+The base app for Blueprint's Rails apps.
 
 ## Installation
 
@@ -22,8 +22,14 @@ TODO: Write usage instructions here
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/bluebase/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+Feel free to open issues or send pull requests with improvements. Thanks in
+advance for your help!
+
+## Cal Blueprint
+![bp](http://bptech.berkeley.edu/assets/logo-full-large-d6419503b443e360bc6c404a16417583.png "BP Banner")
+**[Cal Blueprint](http://www.calblueprint.org/)** is a student-run UC Berkeley organization devoted to matching the skills of its members to our desire to see social good enacted in our community. Each semester, teams of 4-5 students work closely with a non-profit to bring technological solutions to the problems they face every day.
+
+## License
+
+Bluebase is Copyright © 2014 Cal Blueprint. It is free software, and may be redistributed under the terms
+specified in the LICENSE.txt file.
