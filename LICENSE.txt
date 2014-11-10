@@ -1,4 +1,4 @@
-Copyright (c) 2014 Sam Lau
+Copyright (c) 2014 Cal Blueprint
 
 MIT License
 
