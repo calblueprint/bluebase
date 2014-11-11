@@ -38,15 +38,17 @@ module Bluebase
     end
 
     def customize_app_files
-      build :add_vendor_dir
+      build :add_vendor_dirs
       build :replace_application_css_with_scss
-      build :add_application_folder_to_views
+      build :add_application_folder_and_files_to_views
       build :replace_application_erb_with_slim
     end
 
     def outro
       say "Your bluebase is complete!"
-      say "Remember to set your Code Climate token in .travis.yml"
+      say "Remember to set:"
+      say "- Your Code Climate token in .travis.yml"
+      say "- Your env variables in application.yml"
     end
 
     def run_bundle
