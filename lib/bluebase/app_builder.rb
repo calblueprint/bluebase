@@ -71,5 +71,17 @@ module Bluebase
       remove_file "#{base_dir}/application.html.erb"
       copy_file "app/application.html.slim", "#{base_dir}/application.html.slim"
     end
+
+    #########################################################
+    # bin/ directory files
+    #########################################################
+    def add_setup_to_bin
+      copy_file "bin/setup", "bin/setup"
+      run "chmod a+x bin/setup"
+    end
+
+    #########################################################
+    # config/ directory files
+    #########################################################
   end
 end
