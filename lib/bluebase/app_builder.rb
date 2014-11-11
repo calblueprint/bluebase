@@ -20,7 +20,7 @@ module Bluebase
 
     def replace_gitignore
       remove_file ".gitignore"
-      copy_file "gitignore", ".gitignore"
+      copy_file "bluebase_gitignore", ".gitignore"
     end
 
     def add_rubocop_and_hound_config
