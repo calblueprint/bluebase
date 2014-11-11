@@ -23,6 +23,7 @@ module Bluebase
 
     def bluebase_customization
       invoke :customize_root_files
+      invoke :customize_app_files
       invoke :outro
     end
 
@@ -34,6 +35,13 @@ module Bluebase
       build :add_rvm_config
       build :add_travis_config
       build :add_guardfile
+    end
+
+    def customize_app_files
+      build :add_vendor_dir
+      build :replace_application_css_with_scss
+      build :add_application_folder_to_views
+      build :replace_application_erb_with_slim
     end
 
     def outro
