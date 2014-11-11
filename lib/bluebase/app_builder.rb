@@ -10,7 +10,7 @@ module Bluebase
     end
 
     def replace_gemfile
-      remove "Gemfile"
+      remove_file "Gemfile"
       template "Gemfile.erb", "Gemfile"
     end
 
