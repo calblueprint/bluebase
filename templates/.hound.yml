@@ -1,0 +1,4 @@
+inherit_from: ./.rubocop.yml
+
+# Show cop names by default; can commment out if needed
+ShowCopNames: true
