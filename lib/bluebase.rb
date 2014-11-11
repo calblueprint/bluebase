@@ -1,5 +1,7 @@
 require "bluebase/version"
 
 module Bluebase
-  # Your code goes here...
+  def self.hello
+    'world'
+  end
 end
