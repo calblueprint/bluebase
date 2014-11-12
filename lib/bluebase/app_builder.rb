@@ -269,7 +269,12 @@ module Bluebase
 #{join_heroku_app('production')}
       SHELL
 
-      append_file 'bin/setup', remotes
+      append_file "bin/setup", remotes
+    end
+
+    def set_heroku_env_variables
+      append_file "bin/setup", "figaro heroku:set -a #{app_name}-staging -e production"
+      append_file "bin/setup", "figaro heroku:set -a #{app_name}-production -e production"
     end
 
     #########################################################
