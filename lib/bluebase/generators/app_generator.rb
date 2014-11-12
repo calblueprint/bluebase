@@ -9,6 +9,9 @@ module Bluebase
     class_option :heroku, type: :boolean, aliases: "-H", default: false,
       desc: "Create staging and production Heroku apps"
 
+    class_option :skip_git, type: :boolean, default: false,
+      desc: "Skip git init"
+
     class_option :github, type: :string, aliases: "-G", default: nil,
       desc: "Create Github repository and add remote origin pointed to repo"
 
@@ -77,6 +80,7 @@ module Bluebase
     end
 
     def setup_git_and_github
+      print options
       if !options[:skip_git]
         say "Initializing git"
         build :git_init
