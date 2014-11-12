@@ -28,6 +28,7 @@ module Bluebase
       invoke :customize_config_files
       invoke :customize_spec_files
       invoke :setup_git_and_github
+      invoke :setup_heroku_apps
       invoke :outro
     end
 
@@ -83,6 +84,17 @@ module Bluebase
           say "Creating github repo"
           build :create_github_repo, options[:github]
         end
+      end
+    end
+
+    def setup_heroku_apps
+      if options[:heroku]
+        say "Create heroku apps"
+        build :create_heroku_apps
+        build :set_heroku_remotes
+        build :set_heroku_env_variables
+        build :add_heroku_addons
+        build :set_memory_management_variable
       end
     end
 
