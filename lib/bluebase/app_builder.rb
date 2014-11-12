@@ -292,6 +292,12 @@ heroku addons:add rollbar --app #{heroku_app_name :production}
       append_file "bin/setup", config
     end
 
+    def set_memory_management_variable
+      %w(staging production).each do |environment|
+        run_heroku "config:add NEW_RELIC_AGGRESSIVE_KEEPALIVE=1", environment
+      end
+    end
+
     #########################################################
     # Helper methods
     #########################################################
