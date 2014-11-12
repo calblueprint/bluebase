@@ -62,6 +62,7 @@ module Bluebase
       build :add_i18n_tasks_yml
       build :replace_secrets_yml
       build :add_smtp_settings
+      build :remove_routes_comment_lines
     end
 
     def outro

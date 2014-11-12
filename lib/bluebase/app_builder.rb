@@ -209,6 +209,12 @@ module Bluebase
       copy_file file, file
     end
 
+    def remove_routes_comment_lines
+      replace_in_file 'config/routes.rb',
+        /Rails\.application\.routes\.draw do.*end/m,
+        "Rails.application.routes.draw do\nend"
+    end
+
     private
 
     def raise_on_missing_translations_in(environment)
