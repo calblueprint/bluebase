@@ -50,6 +50,18 @@ module Bluebase
       build :add_setup_to_bin
     end
 
+    def customize_config_files
+      build :add_staging_environment
+      build :add_devise_config
+      build :add_figaro_config
+      build :replace_en_yml
+      build :add_application_yml
+      build :add_database_yml
+      build :add_i18n_tasks_yml
+      build :add_secrets_yml
+      build :add_smtp_settings
+    end
+
     def outro
       say "Your bluebase is complete!"
       say "Remember to set:"
