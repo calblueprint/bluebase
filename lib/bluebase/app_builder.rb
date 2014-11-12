@@ -224,6 +224,12 @@ module Bluebase
       empty_directory_with_keep_file "spec/factories"
     end
 
+    def configure_rspec
+      %w(spec/rails_helper.rb spec/spec_helper.rb).each do |file|
+        copy_file file, file
+      end
+    end
+
     private
 
     def raise_on_missing_translations_in(environment)
