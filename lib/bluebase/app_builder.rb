@@ -273,8 +273,8 @@ module Bluebase
     end
 
     def set_heroku_env_variables
-      append_file "bin/setup", "figaro heroku:set -a #{app_name}-staging -e production"
-      append_file "bin/setup", "figaro heroku:set -a #{app_name}-production -e production"
+      append_file "bin/setup", "figaro heroku:set -a #{app_name}-staging -e production\n"
+      append_file "bin/setup", "figaro heroku:set -a #{app_name}-production -e production\n"
     end
 
     #########################################################
