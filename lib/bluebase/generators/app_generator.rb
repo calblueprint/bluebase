@@ -38,6 +38,7 @@ module Bluebase
       build :add_rvm_config
       build :add_travis_config
       build :add_guardfile
+      build :add_dot_rspec
     end
 
     def customize_app_files

@@ -42,6 +42,10 @@ module Bluebase
       copy_file "Guardfile", "Guardfile"
     end
 
+    def add_dot_rspec
+      copy_file ".rspec", ".rspec"
+    end
+
     #########################################################
     # app/ directory files
     #########################################################
