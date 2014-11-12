@@ -166,6 +166,12 @@ module Bluebase
 
       copy_file "config/application.yml.sample", "config/application.yml"
       replace_in_file "config/application.yml",
+        "SECRET_KEY_BASE: <run 'rake secret'>",
+        "SECRET_KEY_BASE: #{generate_secret}"
+      replace_in_file "config/application.yml",
+        "DEVISE_SECRET_KEY: <run 'rake secret'>",
+        "DEVISE_SECRET_KEY: #{generate_secret}"
+      replace_in_file "config/application.yml",
         "# Copy this file into application.yml and change env variables as necessary.",
         "# Change env variables as necessary."
 
@@ -209,6 +215,10 @@ module Bluebase
       config = "config.action_view.raise_on_missing_translations = true"
 
       uncomment_lines("config/environments/#{environment}.rb", config)
+    end
+
+    def generate_secret
+      SecureRandom.hex(64)
     end
   end
 end
