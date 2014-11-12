@@ -243,6 +243,13 @@ module Bluebase
         "spec/support/database_cleaner_and_factory_girl_lint.rb"
     end
 
+    #########################################################
+    # git/heroku setup
+    #########################################################
+    def git_init
+      run 'git init'
+    end
+
     private
 
     def raise_on_missing_translations_in(environment)
