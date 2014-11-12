@@ -76,7 +76,14 @@ module Bluebase
     end
 
     def setup_git_and_github
-      build :git_init
+      if !options[:skip_git]
+        say "Initializing git"
+        build :git_init
+        if options[:github]
+          say "Creating github repo"
+          build :create_github_repo, options[:github]
+        end
+      end
     end
 
     def outro
