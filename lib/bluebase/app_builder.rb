@@ -234,6 +234,10 @@ module Bluebase
       end
     end
 
+    def configure_factorygirl
+      copy_file "spec/factory_girl.rb", "spec/support/factory_girl.rb"
+    end
+
     private
 
     def raise_on_missing_translations_in(environment)
