@@ -255,6 +255,26 @@ module Bluebase
       run "#{path_addition} hub create #{repo_name}"
     end
 
+    def create_heroku_apps
+      run_heroku "create #{app_name}-production", "production"
+      run_heroku "create #{app_name}-staging", "staging"
+      run_heroku "config:add RACK_ENV=staging RAILS_ENV=staging", "staging"
+    end
+
+    def set_heroku_remotes
+      remotes = <<-SHELL
+
+# Set up the staging and production apps.
+#{join_heroku_app('staging')}
+#{join_heroku_app('production')}
+      SHELL
+
+      append_file 'bin/setup', remotes
+    end
+
+    #########################################################
+    # Helper methods
+    #########################################################
     private
 
     def raise_on_missing_translations_in(environment)
@@ -263,8 +283,32 @@ module Bluebase
       uncomment_lines("config/environments/#{environment}.rb", config)
     end
 
+    def run_heroku(command, environment)
+      path_addition = override_path_for_tests
+      run "#{path_addition} heroku #{command} --remote #{environment}"
+    end
+
+    def join_heroku_app(environment)
+      heroku_app_name = "#{app_name}-#{environment}"
+      <<-SHELL
+if heroku join --app #{heroku_app_name} &> /dev/null; then
+  git remote add #{environment} git@heroku.com:#{heroku_app_name}.git || true
+  printf 'You are a collaborator on the "#{heroku_app_name}" Heroku app\n'
+else
+  printf 'Ask for access to the "#{heroku_app_name}" Heroku app\n'
+fi
+      SHELL
+    end
+
     def generate_secret
       SecureRandom.hex(64)
+    end
+
+    def override_path_for_tests
+      if ENV['TESTING']
+        support_bin = File.expand_path(File.join('..', '..', 'spec', 'fakes', 'bin'))
+        "PATH=#{support_bin}:$PATH"
+      end
     end
   end
 end
