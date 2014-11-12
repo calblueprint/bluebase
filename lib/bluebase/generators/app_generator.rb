@@ -80,7 +80,6 @@ module Bluebase
     end
 
     def setup_git_and_github
-      print options
       if !options[:skip_git]
         say "Initializing git"
         build :git_init
