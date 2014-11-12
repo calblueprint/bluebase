@@ -256,8 +256,8 @@ module Bluebase
     end
 
     def create_heroku_apps
-      run_heroku "create #{app_name}-production", "production"
-      run_heroku "create #{app_name}-staging", "staging"
+      run_heroku "create #{heroku_app_name :production}", "production"
+      run_heroku "create #{heroku_app_name :staging}", "staging"
       run_heroku "config:add RACK_ENV=staging RAILS_ENV=staging", "staging"
     end
 
@@ -265,8 +265,8 @@ module Bluebase
       remotes = <<-SHELL
 
 # Set up the staging and production apps.
-#{join_heroku_app('staging')}
-#{join_heroku_app('production')}
+#{join_heroku_app :staging}
+#{join_heroku_app :production}
       SHELL
 
       append_file "bin/setup", remotes
@@ -274,17 +274,20 @@ module Bluebase
 
     def set_heroku_env_variables
       config = <<-SHELL
-figaro heroku:set -a #{app_name}-staging -e production
-figaro heroku:set -a #{app_name}-production -e production
+# Sets Heroku env variables
+figaro heroku:set -a #{heroku_app_name :production} -e production
+figaro heroku:set -a #{heroku_app_name :production} -e production
       SHELL
       append_file "bin/setup", config
     end
 
     def add_heroku_addons
       config = <<-SHELL
-heroku addons:add mandrill
-heroku addons:add newrelic:stark
-heroku addons:add rollbar
+
+# Heroku addons for production
+heroku addons:add mandrill --app #{heroku_app_name :production}
+heroku addons:add newrelic:stark --app #{heroku_app_name :production}
+heroku addons:add rollbar --app #{heroku_app_name :production}
       SHELL
       append_file "bin/setup", config
     end
@@ -305,14 +308,18 @@ heroku addons:add rollbar
       run "#{path_addition} heroku #{command} --remote #{environment}"
     end
 
+    def heroku_app_name(environment)
+      "#{app_name.gsub '_', '-'}-#{environment}"
+    end
+
     def join_heroku_app(environment)
-      heroku_app_name = "#{app_name}-#{environment}"
+      name = heroku_app_name environment
       <<-SHELL
-if heroku join --app #{heroku_app_name} &> /dev/null; then
-  git remote add #{environment} git@heroku.com:#{heroku_app_name}.git || true
-  printf 'You are a collaborator on the "#{heroku_app_name}" Heroku app\n'
+if heroku join --app #{name} &> /dev/null; then
+  git remote add #{environment} git@heroku.com:#{name}.git || true
+  printf 'You are a collaborator on the "#{name}" Heroku app\n'
 else
-  printf 'Ask for access to the "#{heroku_app_name}" Heroku app\n'
+  printf 'Ask for access to the "#{name}" Heroku app\n'
 fi
       SHELL
     end
