@@ -26,6 +26,7 @@ module Bluebase
       invoke :customize_app_files
       invoke :customize_bin_files
       invoke :customize_config_files
+      invoke :customize_spec_files
       invoke :outro
     end
 
@@ -63,6 +64,13 @@ module Bluebase
       build :replace_secrets_yml
       build :add_smtp_settings
       build :remove_routes_comment_lines
+    end
+
+    def customize_spec_files
+      build :add_spec_dirs
+      build :configure_rspec
+      build :configure_factorygirl
+      build :configure_database_cleaner
     end
 
     def outro
