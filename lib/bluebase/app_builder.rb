@@ -42,6 +42,10 @@ module Bluebase
       copy_file "Guardfile", "Guardfile"
     end
 
+    def add_dot_rspec
+      copy_file ".rspec", ".rspec"
+    end
+
     #########################################################
     # app/ directory files
     #########################################################
@@ -210,11 +214,93 @@ module Bluebase
     end
 
     def remove_routes_comment_lines
-      replace_in_file 'config/routes.rb',
+      replace_in_file "config/routes.rb",
         /Rails\.application\.routes\.draw do.*end/m,
         "Rails.application.routes.draw do\nend"
     end
 
+    #########################################################
+    # spec/ directory files
+    #########################################################
+    def add_spec_dirs
+      empty_directory "spec"
+      empty_directory_with_keep_file "spec/features"
+      empty_directory_with_keep_file "spec/factories"
+    end
+
+    def configure_rspec
+      %w(spec/rails_helper.rb spec/spec_helper.rb).each do |file|
+        copy_file file, file
+      end
+    end
+
+    def configure_factorygirl
+      copy_file "spec/factory_girl.rb", "spec/support/factory_girl.rb"
+    end
+
+    def configure_database_cleaner
+      copy_file "spec/database_cleaner_and_factory_girl_lint.rb",
+        "spec/support/database_cleaner_and_factory_girl_lint.rb"
+    end
+
+    #########################################################
+    # git/heroku setup
+    #########################################################
+    def git_init
+      run 'git init'
+    end
+
+    def create_github_repo
+      path_addition = override_path_for_tests
+      run "#{path_addition} hub create #{repo_name}"
+    end
+
+    def create_heroku_apps
+      run_heroku "create #{heroku_app_name :production}", "production"
+      run_heroku "create #{heroku_app_name :staging}", "staging"
+      run_heroku "config:add RACK_ENV=staging RAILS_ENV=staging", "staging"
+    end
+
+    def set_heroku_remotes
+      remotes = <<-SHELL
+
+# Set up the staging and production apps.
+#{join_heroku_app :staging}
+#{join_heroku_app :production}
+      SHELL
+
+      append_file "bin/setup", remotes
+    end
+
+    def set_heroku_env_variables
+      config = <<-SHELL
+# Sets Heroku env variables
+figaro heroku:set -a #{heroku_app_name :production} -e production
+figaro heroku:set -a #{heroku_app_name :production} -e production
+      SHELL
+      append_file "bin/setup", config
+    end
+
+    def add_heroku_addons
+      config = <<-SHELL
+
+# Heroku addons for production
+heroku addons:add mandrill --app #{heroku_app_name :production}
+heroku addons:add newrelic:stark --app #{heroku_app_name :production}
+heroku addons:add rollbar --app #{heroku_app_name :production}
+      SHELL
+      append_file "bin/setup", config
+    end
+
+    def set_memory_management_variable
+      %w(staging production).each do |environment|
+        run_heroku "config:add NEW_RELIC_AGGRESSIVE_KEEPALIVE=1", environment
+      end
+    end
+
+    #########################################################
+    # Helper methods
+    #########################################################
     private
 
     def raise_on_missing_translations_in(environment)
@@ -223,8 +309,36 @@ module Bluebase
       uncomment_lines("config/environments/#{environment}.rb", config)
     end
 
+    def run_heroku(command, environment)
+      path_addition = override_path_for_tests
+      run "#{path_addition} heroku #{command} --remote #{environment}"
+    end
+
+    def heroku_app_name(environment)
+      "#{app_name.gsub '_', '-'}-#{environment}"
+    end
+
+    def join_heroku_app(environment)
+      name = heroku_app_name environment
+      <<-SHELL
+if heroku join --app #{name} &> /dev/null; then
+  git remote add #{environment} git@heroku.com:#{name}.git || true
+  printf 'You are a collaborator on the "#{name}" Heroku app\n'
+else
+  printf 'Ask for access to the "#{name}" Heroku app\n'
+fi
+      SHELL
+    end
+
     def generate_secret
       SecureRandom.hex(64)
+    end
+
+    def override_path_for_tests
+      if ENV['TESTING']
+        support_bin = File.expand_path(File.join('..', '..', 'spec', 'fakes', 'bin'))
+        "PATH=#{support_bin}:$PATH"
+      end
     end
   end
 end

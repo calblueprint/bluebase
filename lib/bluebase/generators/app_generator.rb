@@ -26,6 +26,9 @@ module Bluebase
       invoke :customize_app_files
       invoke :customize_bin_files
       invoke :customize_config_files
+      invoke :customize_spec_files
+      invoke :setup_git_and_github
+      invoke :setup_heroku_apps
       invoke :outro
     end
 
@@ -37,6 +40,7 @@ module Bluebase
       build :add_rvm_config
       build :add_travis_config
       build :add_guardfile
+      build :add_dot_rspec
     end
 
     def customize_app_files
@@ -63,6 +67,35 @@ module Bluebase
       build :replace_secrets_yml
       build :add_smtp_settings
       build :remove_routes_comment_lines
+    end
+
+    def customize_spec_files
+      build :add_spec_dirs
+      build :configure_rspec
+      build :configure_factorygirl
+      build :configure_database_cleaner
+    end
+
+    def setup_git_and_github
+      if !options[:skip_git]
+        say "Initializing git"
+        build :git_init
+        if options[:github]
+          say "Creating github repo"
+          build :create_github_repo, options[:github]
+        end
+      end
+    end
+
+    def setup_heroku_apps
+      if options[:heroku]
+        say "Creating heroku apps"
+        build :create_heroku_apps
+        build :set_heroku_remotes
+        build :set_heroku_env_variables
+        build :add_heroku_addons
+        build :set_memory_management_variable
+      end
     end
 
     def outro
