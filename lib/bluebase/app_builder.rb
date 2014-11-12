@@ -281,7 +281,12 @@ figaro heroku:set -a #{app_name}-production -e production
     end
 
     def add_heroku_addons
-
+      config = <<-SHELL
+heroku addons:add mandrill
+heroku addons:add newrelic:stark
+heroku addons:add rollbar
+      SHELL
+      append_file "bin/setup", config
     end
 
     #########################################################
