@@ -51,6 +51,8 @@ module Bluebase
     end
 
     def customize_config_files
+      build :configure_development_environment
+      build :configure_production_environment
       build :add_staging_environment
       build :add_devise_config
       build :add_figaro_config
@@ -58,7 +60,7 @@ module Bluebase
       build :add_application_yml
       build :add_database_yml
       build :add_i18n_tasks_yml
-      build :add_secrets_yml
+      build :replace_secrets_yml
       build :add_smtp_settings
     end
 
