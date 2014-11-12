@@ -250,6 +250,11 @@ module Bluebase
       run 'git init'
     end
 
+    def create_github_repo
+      path_addition = override_path_for_tests
+      run "#{path_addition} hub create #{repo_name}"
+    end
+
     private
 
     def raise_on_missing_translations_in(environment)
