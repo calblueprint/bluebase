@@ -24,6 +24,8 @@ module Bluebase
     def bluebase_customization
       invoke :customize_root_files
       invoke :customize_app_files
+      invoke :customize_bin_files
+      invoke :customize_config_files
       invoke :outro
     end
 
@@ -42,6 +44,25 @@ module Bluebase
       build :replace_application_css_with_scss
       build :add_application_folder_and_files_to_views
       build :replace_application_erb_with_slim
+    end
+
+    def customize_bin_files
+      build :add_setup_to_bin
+    end
+
+    def customize_config_files
+      build :configure_development_environment
+      build :configure_production_environment
+      build :add_staging_environment
+      build :add_devise_config
+      build :add_figaro_config
+      build :replace_en_yml
+      build :add_application_yml
+      build :add_database_yml
+      build :add_i18n_tasks_yml
+      build :replace_secrets_yml
+      build :add_smtp_settings
+      build :remove_routes_comment_lines
     end
 
     def outro

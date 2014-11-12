@@ -1,0 +1,26 @@
+# Copy this file into application.yml and change env variables as necessary.
+
+SECRET_KEY_BASE: <run 'rake secret'>
+DEVISE_SECRET_KEY: <run 'rake secret'>
+
+# Email config
+SMTP_ADDRESS: <your smtp address>
+SMTP_DOMAIN: <your domain>
+SMTP_PASSWORD: <api_key>
+SMTP_USERNAME: <user_name>
+
+# Staging will send emails to this address
+EMAIL_RECIPIENTS: ~
+staging:
+  EMAIL_RECIPIENTS: <email>
+
+# Rollbar access token; change both to match your own rollbar project
+ROLLBAR_ACCESS_TOKEN: <your rollbar client access token>
+production:
+  ROLLBAR_ACCESS_TOKEN: <your rollbar server access token>
+
+# Google analytics key; update once you set it up
+GA_KEY: UA-XXXXXXXX-X
+# Disabled in testing
+test:
+  GA_KEY: ~
