@@ -210,9 +210,18 @@ module Bluebase
     end
 
     def remove_routes_comment_lines
-      replace_in_file 'config/routes.rb',
+      replace_in_file "config/routes.rb",
         /Rails\.application\.routes\.draw do.*end/m,
         "Rails.application.routes.draw do\nend"
+    end
+
+    #########################################################
+    # spec/ directory files
+    #########################################################
+    def add_spec_dirs
+      empty_directory "spec"
+      empty_directory_with_keep_file "spec/features"
+      empty_directory_with_keep_file "spec/factories"
     end
 
     private
