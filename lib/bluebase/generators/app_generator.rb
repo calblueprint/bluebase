@@ -27,6 +27,7 @@ module Bluebase
       invoke :customize_bin_files
       invoke :customize_config_files
       invoke :customize_spec_files
+      invoke :setup_git_and_github
       invoke :outro
     end
 
@@ -72,6 +73,10 @@ module Bluebase
       build :configure_rspec
       build :configure_factorygirl
       build :configure_database_cleaner
+    end
+
+    def setup_git_and_github
+      build :git_init
     end
 
     def outro
