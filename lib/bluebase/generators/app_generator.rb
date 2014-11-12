@@ -89,7 +89,7 @@ module Bluebase
 
     def setup_heroku_apps
       if options[:heroku]
-        say "Create heroku apps"
+        say "Creating heroku apps"
         build :create_heroku_apps
         build :set_heroku_remotes
         build :set_heroku_env_variables
