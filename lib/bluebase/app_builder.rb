@@ -83,5 +83,132 @@ module Bluebase
     #########################################################
     # config/ directory files
     #########################################################
+    def configure_application_environment
+      config = <<-RUBY
+
+    config.generators do |generate|
+      generate.helper false
+      generate.javascript_engine false
+      generate.request_specs false
+      generate.routing_specs false
+      generate.stylesheets false
+      generate.test_framework :rspec
+      generate.view_specs false
+    end
+
+      RUBY
+      inject_into_class "config/application.rb", "Application", config
+
+      config = <<-RUBY
+    config.active_record.default_timezone = :utc
+      RUBY
+      inject_into_class "config/application.rb", "Application", config
+
+      config = <<-RUBY
+    config.i18n.enforce_available_locales = true
+      RUBY
+      inject_into_class "config/application.rb", "Application", config
+    end
+
+    def configure_development_environment
+      replace_in_file "config/environments/development.rb",
+        "raise_delivery_errors = false", "raise_delivery_errors = true"
+      inject_into_file "config/environments/development.rb",
+        "# Don't send emails in development\nconfig.action_mailer.perform_deliveries = false",
+        after: "raise_delivery_errors = true\n"
+      raise_on_missing_translations_in "development"
+      action_mailer_host "development", "localhost:3000"
+    end
+
+    def configure_production_environment
+      prepend_file "config/environments/production.rb",
+        %{require Rails.root.join("config/smtp")\n}
+
+      config = <<-RUBY
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = SMTP_SETTINGS
+      RUBY
+      inject_into_file "config/environments/production.rb", config,
+        after: "config.action_mailer.raise_delivery_errors = false"
+
+      config = <<-RUBY
+
+  # Enable deflate / gzip compression of controller-generated responses
+  config.middleware.use Rack::Deflater
+      RUBY
+      inject_into_file "config/environments/production.rb", config,
+        after: "config.serve_static_assets = false\n"
+
+      action_mailer_host "production", "please-change-me.com"
+    end
+
+    def add_staging_environment
+      template "config/staging.rb.erb", "config/environments/staging.rb"
+    end
+
+    def add_devise_config
+      copy_file "config/devise.rb", "config/initializers/devise.rb"
+    end
+
+    def add_figaro_config
+      copy_file "config/figaro.rb", "config/initializers/figaro.rb"
+    end
+
+    def replace_en_yml
+      file = "config/locales/en.yml"
+      remove_file file
+      copy_file "config/en.yml", file
+    end
+
+    def add_application_yml
+      copy_file "config/application.yml.sample", "config/application.yml.sample"
+
+      copy_file "config/application.yml.sample", "config/application.yml"
+      replace_in_file "config/application.yml",
+        "# Copy this file into application.yml and change env variables as necessary.",
+        "# Change env variables as necessary."
+
+      copy_file "config/application.yml.sample", "config/application.yml.travis"
+      replace_in_file "config/application.yml.travis",
+        "# Copy this file into application.yml and change env variables as necessary.",
+        "# Change env variables as necessary for Travis."
+    end
+
+    def add_database_yml
+      copy_file "config/database.yml.sample", "config/database.yml.sample"
+
+      remove_file "config/database.yml"
+      copy_file "config/database.yml.sample", "config/database.yml"
+      replace_in_file "config/database.yml",
+        "# and then copy the file into database.yml", ""
+
+      copy_file "config/database.yml.travis", "config/database.yml.travis"
+    end
+
+    def add_i18n_tasks_yml
+      file = "config/i18n-tasks.yml"
+      copy_file file, file
+      # run "cp $(i18n-tasks gem-path)/templates/rspec/i18n_spec.rb spec/"
+    end
+
+    def replace_secrets_yml
+      file = "config/secrets.yml"
+      remove_file file
+      copy_file "config/bluebase_secrets.yml", file
+    end
+
+    def add_smtp_settings
+      file = "config/smtp.rb"
+      copy_file file, file
+    end
+
+    private
+
+    def raise_on_missing_translations_in(environment)
+      config = "config.action_view.raise_on_missing_translations = true"
+
+      uncomment_lines("config/environments/#{environment}.rb", config)
+    end
   end
 end
