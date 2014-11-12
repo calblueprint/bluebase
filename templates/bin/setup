@@ -11,8 +11,14 @@ bundle --version &> /dev/null || gem install bundler --no-document
 bundle install
 
 # Setup database
-rake db:create
-rake db:migrate
+echo "Running rake db:create ; rake db:migrate"
+database_not_set_up=$(grep "<your username>" config/database.yml)
+if [ database_not_set_up ]; then
+  tput setaf 1; echo "\nDatabase not set up! Change your settings in database.yml\n"; tput sgr0
+else
+  rake db:create
+  rake db:migrate
+fi
 
 # Generate rollbar config
 bin/rails generate rollbar
