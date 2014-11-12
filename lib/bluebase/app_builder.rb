@@ -238,6 +238,11 @@ module Bluebase
       copy_file "spec/factory_girl.rb", "spec/support/factory_girl.rb"
     end
 
+    def configure_database_cleaner
+      copy_file "spec/database_cleaner_and_factory_girl_lint.rb",
+        "spec/support/database_cleaner_and_factory_girl_lint.rb"
+    end
+
     private
 
     def raise_on_missing_translations_in(environment)
