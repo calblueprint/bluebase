@@ -58,14 +58,17 @@ module Bluebase
     end
 
     def customize_config_files
+      build :configure_application_environment
       build :configure_development_environment
+      build :configure_test_environment
       build :configure_production_environment
       build :add_staging_environment
       build :add_devise_config
       build :add_figaro_config
       build :replace_en_yml
       build :add_application_yml
-      build :add_database_yml
+      build :add_database_yml if options[:database] == 'postgresql'
+      build :add_travis_database_yml
       build :add_i18n_tasks_yml
       build :replace_secrets_yml
       build :add_smtp_settings
@@ -76,6 +79,8 @@ module Bluebase
       build :add_spec_dirs
       build :configure_rspec
       build :configure_factorygirl
+      build :configure_actionmailer
+      build :configure_i18n
       build :configure_database_cleaner
     end
 

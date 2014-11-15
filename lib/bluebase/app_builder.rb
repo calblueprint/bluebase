@@ -111,6 +111,12 @@ module Bluebase
     config.i18n.enforce_available_locales = true
       RUBY
       inject_into_class "config/application.rb", "Application", config
+
+      config = <<-RUBY
+    config.action_controller.action_on_unpermitted_parameters = :raise
+      RUBY
+
+      inject_into_class "config/application.rb", "Application", config
     end
 
     def configure_development_environment
@@ -121,6 +127,10 @@ module Bluebase
         after: "raise_delivery_errors = true\n"
       raise_on_missing_translations_in "development"
       action_mailer_host "development", "localhost:3000"
+    end
+
+    def configure_test_environment
+      raise_on_missing_translations_in "test"
     end
 
     def configure_production_environment
@@ -161,7 +171,7 @@ module Bluebase
     def replace_en_yml
       file = "config/locales/en.yml"
       remove_file file
-      copy_file "config/en.yml", file
+      template "config/en.yml.erb", file
     end
 
     def add_application_yml
@@ -191,14 +201,15 @@ module Bluebase
       copy_file "config/database.yml.sample", "config/database.yml"
       replace_in_file "config/database.yml",
         "# and then copy the file into database.yml", ""
+    end
 
+    def add_travis_database_yml
       copy_file "config/database.yml.travis", "config/database.yml.travis"
     end
 
     def add_i18n_tasks_yml
       file = "config/i18n-tasks.yml"
       copy_file file, file
-      # run "cp $(i18n-tasks gem-path)/templates/rspec/i18n_spec.rb spec/"
     end
 
     def replace_secrets_yml
@@ -235,6 +246,14 @@ module Bluebase
 
     def configure_factorygirl
       copy_file "spec/factory_girl.rb", "spec/support/factory_girl.rb"
+    end
+
+    def configure_actionmailer
+      copy_file "spec/action_mailer.rb", "spec/support/action_mailer.rb"
+    end
+
+    def configure_i18n
+      copy_file "spec/i18n.rb", "spec/support/i18n.rb"
     end
 
     def configure_database_cleaner
@@ -275,7 +294,7 @@ module Bluebase
       config = <<-SHELL
 # Sets Heroku env variables
 figaro heroku:set -a #{heroku_app_name :production} -e production
-figaro heroku:set -a #{heroku_app_name :production} -e production
+figaro heroku:set -a #{heroku_app_name :staging} -e production
       SHELL
       append_file "bin/setup", config
     end
