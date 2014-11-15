@@ -65,7 +65,8 @@ module Bluebase
       build :add_figaro_config
       build :replace_en_yml
       build :add_application_yml
-      build :add_database_yml
+      build :add_database_yml if options[:database] == 'postgresql'
+      build :add_travis_database_yml
       build :add_i18n_tasks_yml
       build :replace_secrets_yml
       build :add_smtp_settings
