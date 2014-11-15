@@ -59,6 +59,7 @@ module Bluebase
 
     def customize_config_files
       build :configure_development_environment
+      build :configure_test_environment
       build :configure_production_environment
       build :add_staging_environment
       build :add_devise_config

@@ -130,6 +130,10 @@ module Bluebase
       action_mailer_host "development", "localhost:3000"
     end
 
+    def configure_test_environment
+      raise_on_missing_translations_in "test"
+    end
+
     def configure_production_environment
       prepend_file "config/environments/production.rb",
         %{require Rails.root.join("config/smtp")\n}
