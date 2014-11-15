@@ -1,7 +1,7 @@
 # Copy this file into application.yml and change env variables as necessary.
 
-SECRET_KEY_BASE: <run 'rake secret'>
-DEVISE_SECRET_KEY: <run 'rake secret'>
+SECRET_KEY_BASE: <%= SecureRandom.hex(64) %>
+DEVISE_SECRET_KEY: <%= SecureRandom.hex(64) %>
 
 # Email config
 SMTP_ADDRESS: <your smtp address>
