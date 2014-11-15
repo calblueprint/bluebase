@@ -34,7 +34,7 @@ module Bluebase
     end
 
     def add_travis_config
-      copy_file ".travis.yml", ".travis.yml"
+      template ".travis.yml.erb", ".travis.yml"
     end
 
     def add_guardfile
@@ -175,30 +175,24 @@ module Bluebase
     end
 
     def add_application_yml
-      copy_file "config/application.yml.sample", "config/application.yml.sample"
+      template "config/application.yml.sample.erb", "config/application.yml.sample"
 
-      copy_file "config/application.yml.sample", "config/application.yml"
-      replace_in_file "config/application.yml",
-        "SECRET_KEY_BASE: <run 'rake secret'>",
-        "SECRET_KEY_BASE: #{generate_secret}"
-      replace_in_file "config/application.yml",
-        "DEVISE_SECRET_KEY: <run 'rake secret'>",
-        "DEVISE_SECRET_KEY: #{generate_secret}"
+      template "config/application.yml.sample.erb", "config/application.yml"
       replace_in_file "config/application.yml",
         "# Copy this file into application.yml and change env variables as necessary.",
         "# Change env variables as necessary."
 
-      copy_file "config/application.yml.sample", "config/application.yml.travis"
+      template "config/application.yml.sample.erb", "config/application.yml.travis"
       replace_in_file "config/application.yml.travis",
         "# Copy this file into application.yml and change env variables as necessary.",
         "# Change env variables as necessary for Travis."
     end
 
     def add_database_yml
-      copy_file "config/database.yml.sample", "config/database.yml.sample"
+      template "config/database.yml.sample.erb", "config/database.yml.sample"
 
       remove_file "config/database.yml"
-      copy_file "config/database.yml.sample", "config/database.yml"
+      template "config/database.yml.sample.erb", "config/database.yml"
       replace_in_file "config/database.yml",
         "# and then copy the file into database.yml", ""
     end
