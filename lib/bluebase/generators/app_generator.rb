@@ -110,8 +110,10 @@ module Bluebase
     def outro
       say "Your bluebase is complete!"
       say "Remember to set:"
+      say "- Your database settings in config/database.yml"
+      say "- Your env variables in config/application.yml"
       say "- Your Code Climate token in .travis.yml"
-      say "- Your env variables in application.yml"
+      say "Afterward, you can now run bin/setup in your project directory to set up the app."
     end
 
     def run_bundle
