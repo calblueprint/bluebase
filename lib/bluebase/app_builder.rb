@@ -38,7 +38,6 @@ module Bluebase
     end
 
     def add_guardfile
-      # TODO: Guardfile needs more finetuning
       copy_file "Guardfile", "Guardfile"
     end
 
