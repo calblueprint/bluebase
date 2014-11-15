@@ -5,43 +5,43 @@ The base app for Blueprint's Rails apps.
 ## Features
 
 Core gems:
-- Thin for the server
-- Postgres to use postgres as the database
-- Figaro for environment variables
+- [Thin](https://github.com/macournoyer/thin/) for the server
+- [Postgres](https://rubygems.org/gems/pg) to use postgres as the database
+- [Figaro](https://github.com/laserlemon/figaro) for environment variables
 
 Component gems:
-- Devise for user auth
-- Simple_form for easier forms
-- Gon to push data to javascript
-- Kaminari for pagination
-- Recipient Interceptor to stop email sending from staging
+- [Devise](https://github.com/plataformatec/devise) for user auth
+- [Simple Form](https://github.com/plataformatec/simple_form) for easier forms
+- [Gon](https://github.com/gazay/gon) to push data to javascript
+- [Kaminari](https://github.com/amatsuda/kaminari) for pagination
+- [Recipient Interceptor](https://github.com/croaky/recipient_interceptor) to stop email sending from staging
 
 Frontend gems:
-- Slim to use the Slim templating language
-- Autoprefixr to autogenerate vendor prefixes
-- Flutie for the ```body_class``` view helper
-- Title for page titles in I18n
+- [Slim](https://github.com/slim-template/slim-rails) to use the [Slim](http://slim-lang.com/) templating language
+- [Autoprefixer](https://github.com/ai/autoprefixer-rails) to autogenerate vendor prefixes
+- [Flutie](https://github.com/thoughtbot/flutie) for the ```body_class``` view helper
+- [Title](https://github.com/calebthompson/title) for page titles in I18n
 
 Development gems:
-- Annotate to annotate models
-- FFaker to generate random data
-- Better Errors + Binding of Caller for useful error pages
-- Quiet Assets to quiet asset rending output in the server
-- Spring for fast commands
-- Rubocop for Rails linting
-- I18n Tasks to lint translation files
-- Awesome Print for better console object printing
-- Guard to autoreload browser, run RSpec, and run Rubocop on file changes
-- Pry and Pry Byebug to explore objects and debug
+- [Annotate](https://github.com/ctran/annotate_models) to annotate models
+- [FFaker](https://github.com/EmmanuelOga/ffaker) to generate random data
+- [Better Errors](https://github.com/charliesome/better_errors) + [Binding of Caller](https://github.com/banister/binding_of_caller) for useful error pages
+- [Quiet Assets](https://github.com/evrone/quiet_assets) to quiet asset rending output in the server
+- [Spring](https://github.com/rails/spring) for fast commands
+- [Rubocop](https://github.com/bbatsov/rubocop) for Rails linting
+- [I18n Tasks](https://github.com/glebm/i18n-tasks) to lint translation files
+- [Awesome Print](https://github.com/michaeldv/awesome_print) for better console object printing
+- [Guard](https://github.com/guard/guard) to run tasks on file changes
+- [Pry](https://github.com/pry/pry) and [Pry Byebug](https://github.com/deivid-rodriguez/pry-byebug) to explore objects and debug
 
 Test gems:
-- RSpec for specs
-- Capybara for integration tests
-- FactoryGirl for test data
-- Shoulda Matchers for common RSpec matchers
+- [RSpec](https://github.com/rspec/rspec-rails) for specs
+- [Capybara](https://github.com/jnicklas/capybara) for integration tests
+- [FactoryGirl](https://github.com/thoughtbot/factory_girl) for test data
+- [Shoulda Matchers](https://github.com/thoughtbot/shoulda) for common RSpec matchers
 - Launchy to use ```save_and_open_page``` in Capybara
-- Database Cleaner to clear the database for specs
-- CodeClimate Test Reporter to track test coverage
+- [Database Cleaner](https://github.com/DatabaseCleaner/database_cleaner) to clear the database for specs
+- [CodeClimate Test Reporter](https://github.com/codeclimate/ruby-test-reporter) to track test coverage
 
 Production gems/features (most of these require setup):
 - New Relic for monitoring performance
@@ -49,8 +49,12 @@ Production gems/features (most of these require setup):
 - Rails 12Factor for Heroku
 
 Other features:
+- Staging environment config
+- Email config using SMTP
 - The ```./bin/setup``` convention for new developer setup
 - Rails' flashes set up and in application layout
+- Configuration for Rubocop/[Hound](https://houndci.com/)
+- A Guardfile set up with [Livereload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en), RSpec, and Rubocop
 - A few nice time formats set up for localization
 - ```Rack::Deflater``` to compress responses with Gzip
 - A low database connection pool limit
@@ -81,7 +85,7 @@ advance for your help!
 **[Cal Blueprint](http://www.calblueprint.org/)** is a student-run UC Berkeley organization devoted to matching the skills of its members to our desire to see social good enacted in our community. Each semester, teams of 4-5 students work closely with a non-profit to bring technological solutions to the problems they face every day.
 
 ## Credits
-bluebase was based on thoughtbot's [suspenders](https://github.com/thoughtbot/suspenders)
+Bluebase is a fork of thoughtbot's [suspenders](https://github.com/thoughtbot/suspenders)
 
 ## License
 
