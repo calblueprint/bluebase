@@ -2,23 +2,74 @@
 
 The base app for Blueprint's Rails apps.
 
+## Features
+
+Core gems:
+- Thin for the server
+- Postgres to use postgres as the database
+- Figaro for environment variables
+
+Component gems:
+- Devise for user auth
+- Simple_form for easier forms
+- Gon to push data to javascript
+- Kaminari for pagination
+- Recipient Interceptor to stop email sending from staging
+
+Frontend gems:
+- Slim to use the Slim templating language
+- Autoprefixr to autogenerate vendor prefixes
+- Flutie for the ```body_class``` view helper
+- Title for page titles in I18n
+
+Development gems:
+- Annotate to annotate models
+- FFaker to generate random data
+- Better Errors + Binding of Caller for useful error pages
+- Quiet Assets to quiet asset rending output in the server
+- Spring for fast commands
+- Rubocop for Rails linting
+- I18n Tasks to lint translation files
+- Awesome Print for better console object printing
+- Guard to autoreload browser, run RSpec, and run Rubocop on file changes
+- Pry and Pry Byebug to explore objects and debug
+
+Test gems:
+- RSpec for specs
+- Capybara for integration tests
+- FactoryGirl for test data
+- Shoulda Matchers for common RSpec matchers
+- Launchy to use ```save_and_open_page``` in Capybara
+- Database Cleaner to clear the database for specs
+- CodeClimate Test Reporter to track test coverage
+
+Production gems/features (most of these require setup):
+- New Relic for monitoring performance
+- Rollbar for error logging
+- Rails 12Factor for Heroku
+
+Other features:
+- The ```./bin/setup``` convention for new developer setup
+- Rails' flashes set up and in application layout
+- A few nice time formats set up for localization
+- ```Rack::Deflater``` to compress responses with Gzip
+- A low database connection pool limit
+- ```t()``` and ```l()``` in specs without prefixing with I18n
+- An automatically-created ```SECRET_KEY_BASE``` environment variable in all environments.
+- Configuration for Travis continuous integration.
+- Config for Google Analytics
+
 ## Installation
 
-Add this line to your application's Gemfile:
+Run
 
-    gem 'bluebase'
+    gem install bluebase
 
-And then execute:
+Then you can run
 
-    $ bundle
+    bluebase app_name
 
-Or install it yourself as:
-
-    $ gem install bluebase
-
-## Usage
-
-TODO: Write usage instructions here
+To create an app called ```app_name```. Optionally append ```-G repo_name``` and ```-H``` to create a Github repo and staging + production Heroku apps, respectively.
 
 ## Contributing
 
