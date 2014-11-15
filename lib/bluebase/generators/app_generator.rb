@@ -9,8 +9,9 @@ module Bluebase
     class_option :heroku, type: :boolean, aliases: "-H", default: false,
       desc: "Create staging and production Heroku apps"
 
-    class_option :skip_git, type: :boolean, default: false,
-      desc: "Skip git init"
+    class_option :skip_git, type: :boolean, default: false, desc: "Skip git init"
+
+    class_option :skip_bundle, type: :boolean, default: true, desc: "Don't run bundle install"
 
     class_option :github, type: :string, aliases: "-G", default: nil,
       desc: "Create Github repository and add remote origin pointed to repo"
