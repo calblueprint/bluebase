@@ -201,7 +201,6 @@ module Bluebase
     def add_i18n_tasks_yml
       file = "config/i18n-tasks.yml"
       copy_file file, file
-      # run "cp $(i18n-tasks gem-path)/templates/rspec/i18n_spec.rb spec/"
     end
 
     def replace_secrets_yml
@@ -238,6 +237,14 @@ module Bluebase
 
     def configure_factorygirl
       copy_file "spec/factory_girl.rb", "spec/support/factory_girl.rb"
+    end
+
+    def configure_actionmailer
+      copy_file "spec/action_mailer.rb", "spec/support/action_mailer.rb"
+    end
+
+    def configure_i18n
+      copy_file "spec/i18n.rb", "spec/support/i18n.rb"
     end
 
     def configure_database_cleaner

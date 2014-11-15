@@ -77,6 +77,8 @@ module Bluebase
       build :add_spec_dirs
       build :configure_rspec
       build :configure_factorygirl
+      build :configure_actionmailer
+      build :configure_i18n
       build :configure_database_cleaner
     end
 
