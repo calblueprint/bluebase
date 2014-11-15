@@ -8,8 +8,8 @@ development: &default
   password:  <your password>
   pool:      2
   timeout:   5000
-  database: <your app name>_development
+  database: <%= app_name %>_development
 
 test:
   <<: *default
-  database: <your app name>_test
+  database: <%= app_name %>_test
