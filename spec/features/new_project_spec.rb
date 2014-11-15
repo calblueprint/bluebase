@@ -50,7 +50,8 @@ feature 'Initialize a new project with default configuration' do
   end
 
   scenario "specs for missing or unused translations" do
-    expect(File).to exist("#{project_path}/spec/i18n_spec.rb")
+    bin_setup = IO.read("#{project_path}/bin/setup")
+    expect(bin_setup).to include("cp $(i18n-tasks gem-path)/templates/rspec/i18n_spec.rb spec/")
   end
 
   scenario "config file for i18n tasks" do
