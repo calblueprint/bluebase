@@ -26,5 +26,6 @@ Bluebase is Blueprint's base Rails app. We use it internally to get a jump start
   spec.add_runtime_dependency "bundler", "~> 1.6"
 
   spec.add_development_dependency "rspec", "~> 3.1", ">= 3.1.0"
+  spec.add_development_dependency "pry", "~> 0.10"
   spec.add_development_dependency "capybara", "~> 2.4", ">= 2.4.4"
 end
