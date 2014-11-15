@@ -112,6 +112,12 @@ module Bluebase
     config.i18n.enforce_available_locales = true
       RUBY
       inject_into_class "config/application.rb", "Application", config
+
+      config = <<-RUBY
+    config.action_controller.action_on_unpermitted_parameters = :raise
+      RUBY
+
+      inject_into_class "config/application.rb", "Application", config
     end
 
     def configure_development_environment
