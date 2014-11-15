@@ -162,7 +162,7 @@ module Bluebase
     def replace_en_yml
       file = "config/locales/en.yml"
       remove_file file
-      copy_file "config/en.yml", file
+      template "config/en.yml.erb", file
     end
 
     def add_application_yml
@@ -278,7 +278,7 @@ module Bluebase
       config = <<-SHELL
 # Sets Heroku env variables
 figaro heroku:set -a #{heroku_app_name :production} -e production
-figaro heroku:set -a #{heroku_app_name :production} -e production
+figaro heroku:set -a #{heroku_app_name :staging} -e production
       SHELL
       append_file "bin/setup", config
     end
