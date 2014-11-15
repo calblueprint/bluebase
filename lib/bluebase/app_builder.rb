@@ -123,7 +123,7 @@ module Bluebase
       replace_in_file "config/environments/development.rb",
         "raise_delivery_errors = false", "raise_delivery_errors = true"
       inject_into_file "config/environments/development.rb",
-        "# Don't send emails in development\nconfig.action_mailer.perform_deliveries = false",
+        "  # Don't send emails in development\n  config.action_mailer.perform_deliveries = false",
         after: "raise_delivery_errors = true\n"
       raise_on_missing_translations_in "development"
       action_mailer_host "development", "localhost:3000"
