@@ -198,7 +198,7 @@ module Bluebase
     end
 
     def add_travis_database_yml
-      copy_file "config/database.yml.travis", "config/database.yml.travis"
+      template "config/database.yml.travis.erb", "config/database.yml.travis"
     end
 
     def add_i18n_tasks_yml
