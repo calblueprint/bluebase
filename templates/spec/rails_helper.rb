@@ -27,7 +27,4 @@ RSpec.configure do |config|
   config.include Features, type: :feature
   config.use_transactional_fixtures = false
   config.infer_spec_type_from_file_location!
-
-  # Use t instead of I18n.t in tests
-  config.include AbstractController::Translation
 end
