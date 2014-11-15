@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 feature 'Initialize a new project with default configuration' do
+  # TODO: Write comprehensive specs
   before { run_bluebase }
 
   scenario 'staging config is inherited from production' do
