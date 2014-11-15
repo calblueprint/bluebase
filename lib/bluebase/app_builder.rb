@@ -192,7 +192,9 @@ module Bluebase
       copy_file "config/database.yml.sample", "config/database.yml"
       replace_in_file "config/database.yml",
         "# and then copy the file into database.yml", ""
+    end
 
+    def add_travis_database_yml
       copy_file "config/database.yml.travis", "config/database.yml.travis"
     end
 
