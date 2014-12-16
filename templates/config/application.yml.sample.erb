@@ -11,16 +11,17 @@ SMTP_USERNAME: <user_name>
 
 # Staging will send emails to this address
 EMAIL_RECIPIENTS: ~
-staging:
-  EMAIL_RECIPIENTS: <email>
 
 # Rollbar access token; change both to match your own rollbar project
-ROLLBAR_ACCESS_TOKEN: <your rollbar client access token>
-production:
-  ROLLBAR_ACCESS_TOKEN: <your rollbar server access token>
+ROLLBAR_ACCESS_TOKEN: <api_key>
 
 # Google analytics key; update once you set it up
-GA_KEY: UA-XXXXXXXX-X
-# Disabled in testing
-test:
-  GA_KEY: ~
+# Disabled in development and test
+GA_KEY: ~
+
+production:
+  ROLLBAR_ACCESS_TOKEN: <production_api_key>
+  GA_KEY: <GA_token>
+
+staging:
+  EMAIL_RECIPIENTS: <your_email>
