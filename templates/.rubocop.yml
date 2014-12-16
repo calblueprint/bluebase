@@ -1,7 +1,7 @@
 AllCops:
   Exclude:
     - app/views/**/*
-    - app/helpers/ApplicationHelper
+    - app/helpers/application_helper.rb
     - bin/*
     - config/initializers/*
     - db/schema.rb
