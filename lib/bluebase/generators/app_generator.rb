@@ -55,7 +55,8 @@ module Bluebase
     end
 
     def customize_bin_files
-      build :add_setup_to_bin
+      # Rails 4.2.0 comes with a setup script by default
+      # build :add_setup_to_bin
     end
 
     def customize_config_files
