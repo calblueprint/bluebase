@@ -1,5 +1,5 @@
-require 'capybara/rspec'
 require 'bundler/setup'
+require 'capybara/rspec'
 require 'pry'
 
 Bundler.require(:default, :test)
