@@ -1,4 +1,4 @@
-require "bluebase/version"
-require "bluebase/generators/app_generator"
-require "bluebase/actions"
-require "bluebase/app_builder"
+require_relative "bluebase/version"
+require_relative "bluebase/generators/app_generator"
+require_relative "bluebase/actions"
+require_relative "bluebase/app_builder"
